@@ -41,9 +41,24 @@ def checkStatus(json, identifiant):
     if(check == "id mdp invalide"):
         print(datetime.now())
         msg.showinfo("Erreur", check)
-        #insertBDD(identifiant, "Id/MDP", "1", "0")
+        insertBDD(identifiant, "Id/MDP", "1", "0")
     else :
         msg.showinfo("Auth", check)
+        
+def insertBDD(idInf, commentaire, etape, etat):
+    print("ok")
+    # Connection DB
+    try :
+        Connection = mysql.connector.connect(host='127.0.0.1',
+        database='Infirmerie',
+        user='nurse',
+        password='nurse1')
+        print("Connection database Sucessful")
+        mycursor = Connection.cursor()
+        mycursor.execute("Insert into history (Idinf,commentaire,Netape,etat) values ('"+idInf+"', '"+commentaire+"', "+etape+", "+etat+");")
+        Connection.commit()
+    except Error as e:
+        print("Error Connection database",e)
 
 # Connection DB
 try :   
