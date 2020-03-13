@@ -3,7 +3,9 @@
 # All the import
 from tkinter import *
 from tkinter import messagebox as msg
+from bs4 import BeautifulSoup
 import mysql.connector
+import urllib3, json
 from mysql.connector import Error
 
 window = Tk()
@@ -23,18 +25,27 @@ txtMDP.grid(column=2,row=0)
 def clicked():
     mdp = txtMDP.get()
     identifiant = txtId.get()
-    with urllib.request.urlopen("http://www.btssio-carcouet.fr/ppe4/public/connect2/"+identifiant+"/"+mdp+"/infirmiere") as url:
-        data = json.loads(url.read().decode())
-        #print(data['id'])
-        checkStatus(data, identifiant)
+    proxies = {'http': 'http://172.30.137.29:3128'}
+    print("Using HTTP proxy %s" % proxies['http'])
+    http = urllib3.proxy_from_url('http://172.30.137.29:3128')
+    response = http.request("GET", "http://www.btssio-carcouet.fr/ppe4/public/connect2/"+identifiant+"/"+mdp+"/infirmiere")
+    soup = BeautifulSoup(response.data)
+    print(soup)
+    data = json.loads(str(soup.text))
+    print(data)
+    #print(data['id'])
+    #checkStatus(data, identifiant)
     
 def checkStatus(json, identifiant):
+    msg.showinfo("Check", "check")
     check = json.get('nom', 'id mdp invalide')
     #print(check)
     if(check == "id mdp invalide"):
         print(datetime.now())
-        messagebox.showinfo("Erreur", check)
-        insertBDD(identifiant, "Id/MDP", "1", "0")
+        msg.showinfo("Erreur", check)
+        #insertBDD(identifiant, "Id/MDP", "1", "0")
+    else :
+        msg.showinfo("Auth", check)
 
 # Connection DB
 try :   
