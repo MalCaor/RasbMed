@@ -4,6 +4,7 @@
 from tkinter import *
 from tkinter import messagebox as msg
 from bs4 import BeautifulSoup
+from datetime import datetime
 import mysql.connector
 import urllib3, json
 from mysql.connector import Error
@@ -33,13 +34,10 @@ def clicked():
     print(soup)
     data = json.loads(str(soup.text))
     print(data)
-    #print(data['id'])
-    #checkStatus(data, identifiant)
+    checkStatus(data, identifiant)
     
 def checkStatus(json, identifiant):
-    msg.showinfo("Check", "check")
     check = json.get('nom', 'id mdp invalide')
-    #print(check)
     if(check == "id mdp invalide"):
         print(datetime.now())
         msg.showinfo("Erreur", check)
