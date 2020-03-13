@@ -1,0 +1,9 @@
+insert bdd
+	https://pynative.com/python-mysql-insert-data-into-database-table/
+
+json
+	https://stackoverflow.com/questions/24898797/check-if-key-exists-and-iterate-the-json-array-using-python
+	https://stackoverflow.com/questions/12965203/how-to-get-json-from-webpage-into-python-script
+
+tkinter
+	https://likegeeks.com/python-gui-examples-tkinter-tutorial/
